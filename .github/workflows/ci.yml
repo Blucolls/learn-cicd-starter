@@ -18,11 +18,11 @@ jobs:
         with:
           go-version: '1.22'
 
-      - name: Install gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
-
       - name: Unit test
         run: go test -cover ./...
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: security test
         run: gosec ./...
@@ -48,4 +48,3 @@ jobs:
 
       - name: Check Linting
         run: staticcheck ./...
-
