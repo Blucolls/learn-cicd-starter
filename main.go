@@ -76,6 +76,11 @@ func main() {
 		}
 	})
 
+	func unused() {
+		// this function does nothing
+		// and is called nowhere
+	}
+
 	v1Router := chi.NewRouter()
 
 	if apiCfg.DB != nil {
