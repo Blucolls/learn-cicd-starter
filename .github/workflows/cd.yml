@@ -7,6 +7,10 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -18,3 +22,17 @@ jobs:
 
       - name: Build Go
         run: scripts/buildprod.sh
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+  
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+  
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+
+      - name: 'build and push'
+        run: 'gcloud builds submit --tag europe-west10-docker.pkg.dev/notely-431717/notely-ar-repo/notely-app:v1'
